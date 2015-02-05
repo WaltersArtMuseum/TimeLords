@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<meta charset="utf-8">
+	<title>Time Travellers of the Ticking Tock</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link rel="stylesheet" href="/stylesheets/base.css">
+	<link rel="stylesheet" href="/stylesheets/skeleton.css">
+	<link rel="stylesheet" href="/stylesheets/layout.css">
+
+	<link rel="shortcut icon" href="/images/favicon.ico">
+	<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/images/apple-touch-icon-114x114.png">
+
+	<script src="js/store.min.js"></script>
+	<script src="js/guid.js"></script>
+</head>
+
+<body>
+	<div class="container">
+
+		
+		<div class="sixteen columns" id="topbanner">
+			
+			<h3>Ah, welcome my friend.</h3>
+			<p>I have been expecting you. My name is Taweret. I care for everyone here, including dear Isabella & Albert. To survive the trip through time, the travelers will need a good vessel to hold and protect them on their journey. Please help by capturing a photo of a protective cockpit for time travel!</p>
+			<div>
+			<label class="camerabutton">
+				<input id="image" type="file" accept="image/*;capture=camera">
+			</label>
+			</div>
+			<a href="7.html">< 7</a>
+			&nbsp;&nbsp;
+			<a href="9.html">9 ></a>
+		</div>
+
+		<script>
+		var image = document.getElementById("image");
+		image.onchange = function (event) {
+			var formData = new FormData();
+			var uuid = store.get('uuid');
+			if(uuid===undefined){
+        		uuid = guid();
+        		console.log(uuid);
+        		store.set('uuid', uuid);
+    		}
+
+			formData.append("uuid", uuid);
+			formData.append("prompt", "8");
+			formData.append("image", event.target.files[0]);
+
+			var request = new XMLHttpRequest();
+			request.onreadystatechange = function() {
+				if(request.readyState===4){
+					setTimeout(window.location='9.html', 10);
+				}
+			}
+			request.open("POST", "http://72.2.114.118:5100/image");
+			request.send(formData);
+		};
+		</script>
+	</div>
+</body>
+</html>

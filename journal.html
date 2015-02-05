@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta charset="utf-8">
+    <title>Time Travellers of the Ticking Tock</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="stylesheets/base.css">
+    <link rel="stylesheet" href="stylesheets/skeleton.css">
+    <link rel="stylesheet" href="stylesheets/layout.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/store.min.js"></script>
+
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+</head>
+
+<style>
+hr {color:sienna;}
+#tm{
+    width:100%
+}
+</style>
+<script type="text/javascript">
+    var uuid = store.get('uuid');
+    if(uuid===undefined){
+        uuid = guid();
+        store.set('uuid', guid());
+    }
+    console.log("http://192.168.10.124:5100/image?uuid="+uuid);
+    $.getJSON("http://192.168.10.124:5100/image?uuid="+uuid,
+        function(data){
+            var items = [];
+
+            $.each( data, function( key, val ) {
+                console.log(val);
+                if(val.prompt==='4') {
+                    items.push( "<li> Butterfly wings to power the time machine...")
+                }
+                if(val.prompt==='6') {
+                    items.push( "<li> My portable chronograph to help keep time...")
+                }
+                if(val.prompt==='8') {
+                    items.push( "<li> The vessel to shield us from spare time debris...")
+                }
+                items.push( "<li><img id='" + key + "' src='" + val.path + "'/>" );
+            });
+         
+          $( "<ul/>", {
+            "class": "my-new-list",
+            html: items.join( "" )
+          }).appendTo( ".container" );
+        }
+    );
+</script>
+<body>
+    <div class="container">
+        <div class="sixteen columns" id="topbanner">
+            <h2>The Time Traveller's Ticking Tock'</h2>
+            <hr />
+        </div>
+        
+        <div class="sixteen columns" id="topbanner">
+            <a href="#" onclick="history.back();">< back</a>
+            <br>
+            <h3>Your Journal!</h3>
+        </div>
+    </div>
+</body>
+</html>
